@@ -52,19 +52,12 @@ class _FloatingCardState extends State<FloatingCard>
       builder: (context, child) {
         final t = _controller.value * 2 * math.pi;
 
-        // "Wind" Physics Simulation using Superposition of Sine Waves
-        // This creates a non-linear, organic path that feels like floating in air
-
-        // Vertical movement: Main float + subtle variation
         final y =
             math.sin(t) * widget.distance +
             math.sin(t * 2.3) * (widget.distance * 0.3);
 
-        // Horizontal drift: Slower, independent sway
         final x = math.cos(t * 1.4) * (widget.distance * 0.5);
-
-        // Rotation: Very subtle rocking based on horizontal movement
-        final angle = math.sin(t * 0.8) * 0.03; // ~1.7 degrees max tilt
+        final angle = math.sin(t * 0.8) * 0.03;
 
         return Transform(
           transform: Matrix4.identity()

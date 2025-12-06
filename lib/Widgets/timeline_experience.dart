@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:protfolio_website/Widgets/glass_effect_container.dart';
 
 class TimelineExperience extends StatelessWidget {
   const TimelineExperience({super.key});
@@ -7,8 +6,8 @@ class TimelineExperience extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        _buildTimelineItem(
+      children: const [
+        TimelineItem(
           year: "2023 - Present",
           title: "Mobile App Developer",
           company: "Tech Innovators Ltd.",
@@ -17,7 +16,7 @@ class TimelineExperience extends StatelessWidget {
           isFirst: true,
           isLast: false,
         ),
-        _buildTimelineItem(
+        TimelineItem(
           year: "2021 - 2023",
           title: "Junior Software Engineer",
           company: "SoftSys Solutions",
@@ -29,167 +28,224 @@ class TimelineExperience extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildTimelineItem({
-    required String year,
-    required String title,
-    required String company,
-    required String description,
-    required bool isFirst,
-    required bool isLast,
-  }) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Timeline Line & Dot
-          SizedBox(
-            width: 50,
-            child: Column(
-              children: [
-                // Top Line
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    width: 3,
-                    decoration: BoxDecoration(
-                      color: isFirst
-                          ? Colors.transparent
-                          : const Color(0xFF00E5FF).withValues(alpha: 0.6),
-                      boxShadow: isFirst
-                          ? []
-                          : [
-                              BoxShadow(
-                                color: const Color(
-                                  0xFF00E5FF,
-                                ).withValues(alpha: 0.3),
-                                blurRadius: 4,
-                                spreadRadius: 1,
-                              ),
-                            ],
-                    ),
-                  ),
-                ),
-                // Dot
-                Container(
-                  width: 18,
-                  height: 18,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF00E5FF),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFF050505),
+class TimelineItem extends StatefulWidget {
+  final String year;
+  final String title;
+  final String company;
+  final String description;
+  final bool isFirst;
+  final bool isLast;
+
+  const TimelineItem({
+    super.key,
+    required this.year,
+    required this.title,
+    required this.company,
+    required this.description,
+    required this.isFirst,
+    required this.isLast,
+  });
+
+  @override
+  State<TimelineItem> createState() => _TimelineItemState();
+}
+
+class _TimelineItemState extends State<TimelineItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Timeline Line & Dot
+            SizedBox(
+              width: 50,
+              child: Column(
+                children: [
+                  // Top Line
+                  Expanded(
+                    flex: 1,
+                    child: Container(
                       width: 3,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF00E5FF).withValues(alpha: 0.7),
-                        blurRadius: 15,
-                        spreadRadius: 3,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            widget.isFirst
+                                ? Colors.transparent
+                                : const Color(
+                                    0xFF00E5FF,
+                                  ).withValues(alpha: 0.2),
+                            const Color(0xFF00E5FF).withValues(alpha: 0.6),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                // Bottom Line
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    width: 3,
+                  // Dot
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: _isHovered ? 24 : 18,
+                    height: _isHovered ? 24 : 18,
                     decoration: BoxDecoration(
-                      color: isLast
-                          ? Colors.transparent
-                          : const Color(0xFF00E5FF).withValues(alpha: 0.6),
-                      boxShadow: isLast
-                          ? []
-                          : [
+                      color: _isHovered
+                          ? const Color(0xFF00E5FF)
+                          : const Color(0xFF00E5FF).withValues(alpha: 0.8),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFF050505),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(
+                            0xFF00E5FF,
+                          ).withValues(alpha: _isHovered ? 0.8 : 0.4),
+                          blurRadius: _isHovered ? 20 : 10,
+                          spreadRadius: _isHovered ? 5 : 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Bottom Line
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      width: 3,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            const Color(0xFF00E5FF).withValues(alpha: 0.6),
+                            widget.isLast
+                                ? Colors.transparent
+                                : const Color(
+                                    0xFF00E5FF,
+                                  ).withValues(alpha: 0.2),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Content Card
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  transform: Matrix4.translationValues(
+                    _isHovered ? 10 : 0,
+                    0,
+                    0,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(
+                        alpha: _isHovered ? 0.08 : 0.03,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: const Color(
+                          0xFF00E5FF,
+                        ).withValues(alpha: _isHovered ? 0.3 : 0.1),
+                      ),
+                      boxShadow: _isHovered
+                          ? [
                               BoxShadow(
                                 color: const Color(
                                   0xFF00E5FF,
-                                ).withValues(alpha: 0.3),
-                                blurRadius: 4,
-                                spreadRadius: 1,
+                                ).withValues(alpha: 0.1),
+                                blurRadius: 30,
+                                spreadRadius: -5,
                               ),
-                            ],
+                            ]
+                          : [],
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Content Card
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: GlassEffectContainer(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF00E5FF),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                widget.title,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: _isHovered
+                                      ? const Color(0xFF00E5FF)
+                                      : Colors.white,
+                                ),
+                              ),
                             ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                  0xFF00E5FF,
+                                ).withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: const Color(
+                                    0xFF00E5FF,
+                                  ).withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Text(
+                                widget.year,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.company,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white70,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(
-                              0xFF00E5FF,
-                            ).withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: const Color(
-                                0xFF00E5FF,
-                              ).withValues(alpha: 0.3),
-                            ),
-                          ),
-                          child: Text(
-                            year,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        const SizedBox(height: 12),
+                        Text(
+                          widget.description,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white.withValues(alpha: 0.7),
+                            height: 1.5,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      company,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      description,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white.withValues(alpha: 0.7),
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
