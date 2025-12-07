@@ -68,8 +68,8 @@ class _ProfileImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: Image.network(
-          "https://avatars.githubusercontent.com/u/1?v=4", // Placeholder
+        child: Image.asset(
+          "assets/images/profile.jpg", // Placeholder
           fit: BoxFit.cover,
         ),
       ),

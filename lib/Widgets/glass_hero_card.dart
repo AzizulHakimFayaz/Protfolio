@@ -260,8 +260,8 @@ class _FloatingProfileImageState extends State<_FloatingProfileImage>
         child: const CircleAvatar(
           radius: 60,
           backgroundColor: AppColors.navyLight,
-          backgroundImage: NetworkImage(
-            "https://avatars.githubusercontent.com/u/1?v=4",
+          backgroundImage: AssetImage(
+            "assets/images/profile.jpg",
           ), // Placeholder
         ),
       ),
