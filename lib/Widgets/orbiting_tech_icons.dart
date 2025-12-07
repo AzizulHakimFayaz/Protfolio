@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 
 class OrbitingTechIcons extends StatefulWidget {
   final List<IconData> technologies;
@@ -65,16 +66,16 @@ class _OrbitingTechIconsState extends State<OrbitingTechIcons>
             height: 80,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withValues(alpha: 0.8),
+              color: AppColors.scaffoldBackground.withValues(alpha: 0.8),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00E5FF).withValues(alpha: 0.3),
+                  color: AppColors.neonCyan.withValues(alpha: 0.3),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
               ],
               border: Border.all(
-                color: const Color(0xFF00E5FF).withValues(alpha: 0.5),
+                color: AppColors.neonCyan.withValues(alpha: 0.5),
                 width: 2,
               ),
             ),
@@ -83,7 +84,7 @@ class _OrbitingTechIconsState extends State<OrbitingTechIcons>
               widget.centerText,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimaryDark,
                 fontWeight: FontWeight.bold,
                 fontSize: 12,
               ),
@@ -106,21 +107,21 @@ class _OrbitingTechIconsState extends State<OrbitingTechIcons>
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF050505),
+                      color: AppColors.scaffoldBackground,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFFE040FB).withValues(alpha: 0.5),
+                        color: AppColors.neonPurple.withValues(alpha: 0.5),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFFE040FB).withValues(alpha: 0.3),
+                          color: AppColors.neonPurple.withValues(alpha: 0.3),
                           blurRadius: 10,
                         ),
                       ],
                     ),
                     child: Icon(
                       widget.technologies[index],
-                      color: Colors.white,
+                      color: AppColors.textPrimaryDark,
                       size: 18,
                     ),
                   ),
@@ -149,7 +150,7 @@ class _OrbitLinesPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..color = const Color(0xFF00E5FF).withValues(alpha: 0.3)
+      ..color = AppColors.neonCyan.withValues(alpha: 0.3)
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 

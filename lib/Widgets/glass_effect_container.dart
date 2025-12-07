@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 
 class GlassEffectContainer extends StatelessWidget {
   final double? width;
@@ -30,18 +31,18 @@ class GlassEffectContainer extends StatelessWidget {
           height: height,
           padding: padding,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.1),
+            color: AppColors.textPrimaryDark.withValues(alpha: 0.1),
             borderRadius: radius,
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.textPrimaryDark.withValues(alpha: 0.2),
               width: 1.5,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.white.withValues(alpha: 0.2),
-                Colors.white.withValues(alpha: 0.05),
+                AppColors.textPrimaryDark.withValues(alpha: 0.2),
+                AppColors.textPrimaryDark.withValues(alpha: 0.05),
               ],
             ),
           ),

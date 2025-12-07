@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:protfolio_website/Widgets/glass_effect_container.dart';
 import 'package:protfolio_website/Widgets/orbiting_tech_icons.dart';
 
@@ -52,7 +53,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.4,
-                  color: Colors.white.withValues(alpha: 0.7),
+                  color: AppColors.textPrimaryDark.withValues(alpha: 0.7),
                 ),
               ),
             ],

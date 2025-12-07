@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 
 class ModernProjectCard extends StatefulWidget {
   final String title;
@@ -13,7 +14,7 @@ class ModernProjectCard extends StatefulWidget {
     required this.description,
     required this.technologies,
     this.imagePath = "",
-    this.accentColor = const Color(0xFF00E5FF),
+    this.accentColor = AppColors.neonCyan,
   });
 
   @override
@@ -79,10 +80,10 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withValues(
+                        AppColors.textPrimaryDark.withValues(
                           alpha: 0.05 + (0.05 * hoverValue),
                         ),
-                        Colors.white.withValues(
+                        AppColors.textPrimaryDark.withValues(
                           alpha: 0.01 + (0.02 * hoverValue),
                         ),
                       ],
@@ -119,7 +120,9 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                 ),
                                 border: Border(
                                   right: BorderSide(
-                                    color: Colors.white.withValues(alpha: 0.1),
+                                    color: AppColors.textPrimaryDark.withValues(
+                                      alpha: 0.1,
+                                    ),
                                     width: 1,
                                   ),
                                 ),
@@ -147,7 +150,7 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                         ? widget.technologies.first
                                         : Icons.code,
                                     size: 40 + (5 * hoverValue),
-                                    color: Colors.white,
+                                    color: AppColors.textPrimaryDark,
                                   ),
                                 ),
                               ),
@@ -168,7 +171,7 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: AppColors.textPrimaryDark,
                                       letterSpacing: 0.5,
                                     ),
                                   ),
@@ -177,9 +180,8 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                     widget.description,
                                     style: TextStyle(
                                       fontSize: 15,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.7,
-                                      ),
+                                      color: AppColors.textPrimaryDark
+                                          .withValues(alpha: 0.7),
                                       height: 1.5,
                                     ),
                                   ),

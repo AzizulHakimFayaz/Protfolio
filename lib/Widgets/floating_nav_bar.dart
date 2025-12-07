@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:protfolio_website/Widgets/glass_effect_container.dart';
 
 class FloatingNavBar extends StatefulWidget {
@@ -21,12 +22,12 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
   final List<IconData> _icons = [
     Icons.home_rounded,
     Icons.person_rounded,
-    Icons.code_rounded,
+
     Icons.work_rounded,
     Icons.chat_bubble_rounded,
   ];
 
-  final List<String> _labels = ["Home", "About", "Skills", "Projects", "Chat"];
+  final List<String> _labels = ["Home", "About", "Projects", "Chat"];
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +66,15 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? const Color(0xFF00E5FF).withValues(alpha: 0.2)
+                            ? AppColors.neonCyan.withValues(alpha: 0.2)
                             : Colors.transparent,
                         shape: BoxShape.circle,
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: const Color(
-                                    0xFF00E5FF,
-                                  ).withValues(alpha: 0.3),
+                                  color: AppColors.neonCyan.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 15,
                                   spreadRadius: 2,
                                 ),
@@ -85,8 +86,8 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
                         child: Icon(
                           _icons[index],
                           color: isSelected
-                              ? const Color(0xFF00E5FF)
-                              : Colors.white70,
+                              ? AppColors.neonCyan
+                              : AppColors.textSecondaryDark,
                           size: isSelected ? 28 : 24,
                         ),
                       ),

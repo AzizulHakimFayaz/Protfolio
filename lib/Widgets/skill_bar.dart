@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 
 class SkillBar extends StatefulWidget {
   final String skillName;
@@ -9,7 +10,7 @@ class SkillBar extends StatefulWidget {
     super.key,
     required this.skillName,
     required this.percentage,
-    this.color = const Color(0xFF00E5FF), // Cyan accent
+    this.color = AppColors.neonCyan, // Cyan accent
   });
 
   @override
@@ -63,7 +64,7 @@ class _SkillBarState extends State<SkillBar>
               Text(
                 "${(widget.percentage * 100).toInt()}%",
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.9),
+                  color: AppColors.textPrimaryDark.withValues(alpha: 0.9),
                   fontSize: 14,
                   fontFamily: "monospace",
                   fontWeight: FontWeight.bold,
@@ -84,7 +85,9 @@ class _SkillBarState extends State<SkillBar>
                         return Expanded(
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 1),
-                            color: Colors.white.withValues(alpha: 0.05),
+                            color: AppColors.textPrimaryDark.withValues(
+                              alpha: 0.05,
+                            ),
                           ),
                         );
                       }),
@@ -146,7 +149,9 @@ class _SkillBarState extends State<SkillBar>
                               gradient: LinearGradient(
                                 colors: [
                                   Colors.transparent,
-                                  Colors.white.withValues(alpha: 0.8),
+                                  AppColors.textPrimaryDark.withValues(
+                                    alpha: 0.8,
+                                  ),
                                   Colors.transparent,
                                 ],
                               ),

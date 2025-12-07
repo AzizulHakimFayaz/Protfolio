@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FooterSection extends StatefulWidget {
@@ -28,7 +29,7 @@ class _FooterSectionState extends State<FooterSection> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-      color: Colors.black,
+      color: AppColors.scaffoldBackground,
       child: Column(
         children: [
           // Terminal Contact Form
@@ -37,12 +38,12 @@ class _FooterSectionState extends State<FooterSection> {
             constraints: const BoxConstraints(maxWidth: 600),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: const Color(0xFF1A1A1A),
+              color: AppColors.cardDark,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFF00E5FF), width: 1),
+              border: Border.all(color: AppColors.neonCyan, width: 1),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00E5FF).withValues(alpha: 0.2),
+                  color: AppColors.neonCyan.withValues(alpha: 0.2),
                   blurRadius: 20,
                 ),
               ],
@@ -93,7 +94,7 @@ class _FooterSectionState extends State<FooterSection> {
                 Text(
                   _output,
                   style: const TextStyle(
-                    color: Color(0xFF00E5FF),
+                    color: AppColors.neonCyan,
                     fontFamily: "monospace",
                   ),
                 ),
@@ -103,7 +104,7 @@ class _FooterSectionState extends State<FooterSection> {
                     const Text(
                       "\$",
                       style: TextStyle(
-                        color: Color(0xFFE040FB),
+                        color: AppColors.neonPurple,
                         fontFamily: "monospace",
                         fontWeight: FontWeight.bold,
                       ),
@@ -113,7 +114,7 @@ class _FooterSectionState extends State<FooterSection> {
                       child: TextField(
                         controller: _cmdController,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimaryDark,
                           fontFamily: "monospace",
                         ),
                         decoration: const InputDecoration(
@@ -151,7 +152,7 @@ class _FooterSectionState extends State<FooterSection> {
           Text(
             "© ${DateTime.now().year} Azizul Hakim. Built with Flutter.",
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.5),
+              color: AppColors.textPrimaryDark.withValues(alpha: 0.5),
               fontSize: 12,
             ),
           ),
@@ -191,16 +192,16 @@ class _SocialIconState extends State<_SocialIcon> {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: _isHovered
-                ? const Color(0xFFE040FB).withValues(alpha: 0.2)
+                ? AppColors.neonPurple.withValues(alpha: 0.2)
                 : Colors.transparent,
             shape: BoxShape.circle,
             border: Border.all(
-              color: _isHovered ? const Color(0xFFE040FB) : Colors.white24,
+              color: _isHovered ? AppColors.neonPurple : Colors.white24,
             ),
             boxShadow: _isHovered
                 ? [
                     BoxShadow(
-                      color: const Color(0xFFE040FB).withValues(alpha: 0.5),
+                      color: AppColors.neonPurple.withValues(alpha: 0.5),
                       blurRadius: 15,
                     ),
                   ]
@@ -208,7 +209,7 @@ class _SocialIconState extends State<_SocialIcon> {
           ),
           child: Icon(
             widget.icon,
-            color: _isHovered ? const Color(0xFFE040FB) : Colors.white70,
+            color: _isHovered ? AppColors.neonPurple : Colors.white70,
             size: 24,
           ),
         ),

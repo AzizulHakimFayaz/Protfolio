@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:protfolio_website/Widgets/floating_card.dart';
 import 'package:protfolio_website/Widgets/glass_effect_container.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -208,17 +209,17 @@ class CentralHubCard extends StatelessWidget {
       width: 180,
       height: 180,
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00E5FF).withValues(alpha: 0.3),
+            color: AppColors.neonCyan.withValues(alpha: 0.3),
             blurRadius: 50,
             spreadRadius: 10,
           ),
         ],
         border: Border.all(
-          color: const Color(0xFF00E5FF).withValues(alpha: 0.5),
+          color: AppColors.neonCyan.withValues(alpha: 0.5),
           width: 2,
         ),
       ),
@@ -228,10 +229,10 @@ class CentralHubCard extends StatelessWidget {
           height: 140,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFF00E5FF), width: 3),
+            border: Border.all(color: AppColors.neonCyan, width: 3),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00E5FF).withValues(alpha: 0.5),
+                color: AppColors.neonCyan.withValues(alpha: 0.5),
                 blurRadius: 20,
                 spreadRadius: 5,
               ),
@@ -244,11 +245,11 @@ class CentralHubCard extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) {
                 // Fallback if image not found
                 return Container(
-                  color: const Color(0xFF2A2A2A),
+                  color: AppColors.cardDark,
                   child: const Icon(
                     Icons.person,
                     size: 80,
-                    color: const Color(0xFF00E5FF),
+                    color: AppColors.neonCyan,
                   ),
                 );
               },
@@ -344,7 +345,9 @@ class _FeatureIconCardState extends State<FeatureIconCard> {
                 Text(
                   widget.label,
                   style: TextStyle(
-                    color: _isHovered ? Colors.white : Colors.white70,
+                    color: _isHovered
+                        ? AppColors.textPrimaryDark
+                        : Colors.white70,
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
                   ),
@@ -367,12 +370,12 @@ class ConnectionPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..color = const Color(0xFF00E5FF).withValues(alpha: 0.1)
+      ..color = AppColors.neonCyan.withValues(alpha: 0.1)
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
     final activePaint = Paint()
-      ..color = const Color(0xFF00E5FF).withValues(alpha: 0.8)
+      ..color = AppColors.neonCyan.withValues(alpha: 0.8)
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4);
@@ -407,8 +410,8 @@ class ConnectionPainter extends CustomPainter {
         isHovered ? 4 : 2,
         Paint()
           ..color = isHovered
-              ? const Color(0xFF00E5FF)
-              : const Color(0xFF00E5FF).withValues(alpha: 0.3),
+              ? AppColors.neonCyan
+              : AppColors.neonCyan.withValues(alpha: 0.3),
       );
     }
   }
