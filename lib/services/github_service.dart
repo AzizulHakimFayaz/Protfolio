@@ -1,6 +1,24 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:protfolio_website/models/contribution_model.dart';
+import 'package:flutter/foundation.dart';
+
+class GithubService {
+  static const String _username = 'AzizulHakimFayaz'; // Default username
+  // TODO: Replace with your actual GitHub Personal Access Token
+  // WARNING: Do not commit this token to a public repository.
+  static const String _token = String.fromEnvironment(
+    'GITHUB_TOKEN',
+    defaultValue: '', // Will use empty string if not provided
+  );
+
+  static const String _graphQLEndpoint = 'https://api.github.com/graphql';
+
+  Future<GithubData?> fetchGithubData() async {
+    const String query = '''
+      query(\$username: String!) {
+        user(login: \$username) {
+          avatarUrl
           followers {
             totalCount
           }
@@ -24,6 +42,20 @@ import 'package:protfolio_website/models/contribution_model.dart';
           }
         }
       }
+    ''';
+
+    try {
+      final response = await http.post(
+        Uri.parse(_graphQLEndpoint),
+        headers: {
+          'Authorization': 'Bearer $_token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'query': query,
+          'variables': {'username': _username},
+        }),
+      );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

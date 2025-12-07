@@ -1,0 +1,7 @@
+{
+    "buildCommand": "flutter build web --dart-define=GITHUB_TOKEN=$GITHUB_TOKEN",
+    "outputDirectory": "build/web",
+    "installCommand": "if [ ! -d \"/vercel/.flutter\" ]; then git clone https://github.com/flutter/flutter.git /vercel/.flutter; fi && /vercel/.flutter/bin/flutter --version && /vercel/.flutter/bin/flutter pub get",
+    "framework": null,
+    "devCommand": null
+}
