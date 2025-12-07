@@ -76,8 +76,8 @@ class _SkillCardState extends State<_SkillCard> {
           boxShadow: [
             BoxShadow(
               color: _isHovered
-                  ? AppColors.accentTeal.withValues(alpha: 0.2)
-                  : Colors.grey.withValues(alpha: 0.1),
+                  ? AppColors.accentTeal.withOpacity(0.2)
+                  : Colors.grey.withOpacity(0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),

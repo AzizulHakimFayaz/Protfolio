@@ -66,16 +66,16 @@ class _OrbitingTechIconsState extends State<OrbitingTechIcons>
             height: 80,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.scaffoldBackground.withValues(alpha: 0.8),
+              color: AppColors.scaffoldBackground.withOpacity(0.8),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.neonCyan.withValues(alpha: 0.3),
+                  color: AppColors.neonCyan.withOpacity(0.3),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
               ],
               border: Border.all(
-                color: AppColors.neonCyan.withValues(alpha: 0.5),
+                color: AppColors.neonCyan.withOpacity(0.5),
                 width: 2,
               ),
             ),
@@ -110,11 +110,11 @@ class _OrbitingTechIconsState extends State<OrbitingTechIcons>
                       color: AppColors.scaffoldBackground,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.neonPurple.withValues(alpha: 0.5),
+                        color: AppColors.neonPurple.withOpacity(0.5),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.neonPurple.withValues(alpha: 0.3),
+                          color: AppColors.neonPurple.withOpacity(0.3),
                           blurRadius: 10,
                         ),
                       ],
@@ -150,7 +150,7 @@ class _OrbitLinesPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..color = AppColors.neonCyan.withValues(alpha: 0.3)
+      ..color = AppColors.neonCyan.withOpacity(0.3)
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 

@@ -55,7 +55,7 @@ class _SkillBarState extends State<SkillBar>
                   letterSpacing: 2.0,
                   shadows: [
                     Shadow(
-                      color: widget.color.withValues(alpha: 0.5),
+                      color: widget.color.withOpacity(0.5),
                       blurRadius: 10,
                     ),
                   ],
@@ -64,7 +64,7 @@ class _SkillBarState extends State<SkillBar>
               Text(
                 "${(widget.percentage * 100).toInt()}%",
                 style: TextStyle(
-                  color: AppColors.textPrimaryDark.withValues(alpha: 0.9),
+                  color: AppColors.textPrimaryDark.withOpacity(0.9),
                   fontSize: 14,
                   fontFamily: "monospace",
                   fontWeight: FontWeight.bold,
@@ -85,9 +85,7 @@ class _SkillBarState extends State<SkillBar>
                         return Expanded(
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 1),
-                            color: AppColors.textPrimaryDark.withValues(
-                              alpha: 0.05,
-                            ),
+                            color: AppColors.textPrimaryDark.withOpacity(0.05),
                           ),
                         );
                       }),
@@ -111,13 +109,13 @@ class _SkillBarState extends State<SkillBar>
                                 ),
                                 decoration: BoxDecoration(
                                   color: isFilled
-                                      ? widget.color.withValues(alpha: 0.8)
+                                      ? widget.color.withOpacity(0.8)
                                       : Colors.transparent,
                                   boxShadow: isFilled
                                       ? [
                                           BoxShadow(
-                                            color: widget.color.withValues(
-                                              alpha: 0.5,
+                                            color: widget.color.withOpacity(
+                                              0.5,
                                             ),
                                             blurRadius: 5,
                                             spreadRadius: 1,
@@ -149,9 +147,7 @@ class _SkillBarState extends State<SkillBar>
                               gradient: LinearGradient(
                                 colors: [
                                   Colors.transparent,
-                                  AppColors.textPrimaryDark.withValues(
-                                    alpha: 0.8,
-                                  ),
+                                  AppColors.textPrimaryDark.withOpacity(0.8),
                                   Colors.transparent,
                                 ],
                               ),

@@ -60,7 +60,7 @@ class _ProfileImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -146,9 +146,9 @@ class _TechChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.accentTeal.withValues(alpha: 0.1),
+        color: AppColors.accentTeal.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.accentTeal.withValues(alpha: 0.3)),
+        border: Border.all(color: AppColors.accentTeal.withOpacity(0.3)),
       ),
       child: Text(
         label,

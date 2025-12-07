@@ -52,10 +52,10 @@ class _AIChatSectionState extends State<AIChatSection> {
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: AppColors.textPrimaryDark.withValues(alpha: 0.95),
+            color: AppColors.textPrimaryDark.withOpacity(0.95),
             shadows: [
               Shadow(
-                color: AppColors.neonCyan.withValues(alpha: 0.5),
+                color: AppColors.neonCyan.withOpacity(0.5),
                 blurRadius: 10,
               ),
             ],
@@ -90,8 +90,8 @@ class _AIChatSectionState extends State<AIChatSection> {
                         constraints: const BoxConstraints(maxWidth: 250),
                         decoration: BoxDecoration(
                           color: isUser
-                              ? AppColors.neonCyan.withValues(alpha: 0.2)
-                              : AppColors.neonPurple.withValues(alpha: 0.1),
+                              ? AppColors.neonCyan.withOpacity(0.2)
+                              : AppColors.neonPurple.withOpacity(0.1),
                           borderRadius: BorderRadius.only(
                             topLeft: const Radius.circular(20),
                             topRight: const Radius.circular(20),
@@ -104,16 +104,14 @@ class _AIChatSectionState extends State<AIChatSection> {
                           ),
                           border: Border.all(
                             color: isUser
-                                ? AppColors.neonCyan.withValues(alpha: 0.3)
-                                : AppColors.neonPurple.withValues(alpha: 0.3),
+                                ? AppColors.neonCyan.withOpacity(0.3)
+                                : AppColors.neonPurple.withOpacity(0.3),
                           ),
                         ),
                         child: Text(
                           msg["message"]!,
                           style: TextStyle(
-                            color: AppColors.textPrimaryDark.withValues(
-                              alpha: 0.9,
-                            ),
+                            color: AppColors.textPrimaryDark.withOpacity(0.9),
                             fontSize: 14,
                             height: 1.4,
                           ),
@@ -133,14 +131,10 @@ class _AIChatSectionState extends State<AIChatSection> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
-                        color: AppColors.scaffoldBackground.withValues(
-                          alpha: 0.3,
-                        ),
+                        color: AppColors.scaffoldBackground.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
-                          color: AppColors.textPrimaryDark.withValues(
-                            alpha: 0.1,
-                          ),
+                          color: AppColors.textPrimaryDark.withOpacity(0.1),
                         ),
                       ),
                       child: TextField(
@@ -151,9 +145,7 @@ class _AIChatSectionState extends State<AIChatSection> {
                         decoration: InputDecoration(
                           hintText: "Ask about my skills...",
                           hintStyle: TextStyle(
-                            color: AppColors.textPrimaryDark.withValues(
-                              alpha: 0.3,
-                            ),
+                            color: AppColors.textPrimaryDark.withOpacity(0.3),
                           ),
                           border: InputBorder.none,
                         ),
@@ -167,10 +159,10 @@ class _AIChatSectionState extends State<AIChatSection> {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppColors.neonCyan.withValues(alpha: 0.2),
+                        color: AppColors.neonCyan.withOpacity(0.2),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppColors.neonCyan.withValues(alpha: 0.5),
+                          color: AppColors.neonCyan.withOpacity(0.5),
                         ),
                       ),
                       child: const Icon(

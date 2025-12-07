@@ -199,7 +199,7 @@ class _ParticlePainter extends CustomPainter {
       double drawSize = particle.size;
       if (mouseDist < connectionDistance * 1.5) {
         drawSize *= 1.5;
-        particlePaint.color = color.withValues(alpha: 1.0); // Brighter
+        particlePaint.color = color.withOpacity(1.0); // Brighter
       }
       canvas.drawCircle(pos, drawSize, particlePaint);
 
@@ -210,7 +210,7 @@ class _ParticlePainter extends CustomPainter {
 
         if (dist < connectionDistance) {
           final opacity = (1 - dist / connectionDistance).clamp(0.0, 1.0);
-          linePaint.color = color.withValues(alpha: 0.5 * opacity);
+          linePaint.color = color.withOpacity(0.5 * opacity);
           canvas.drawLine(pos, otherPos, linePaint);
         }
       }
@@ -221,7 +221,7 @@ class _ParticlePainter extends CustomPainter {
           0.0,
           1.0,
         );
-        linePaint.color = color.withValues(alpha: 0.8 * opacity);
+        linePaint.color = color.withOpacity(0.8 * opacity);
         canvas.drawLine(pos, mousePosition!, linePaint);
       }
     }

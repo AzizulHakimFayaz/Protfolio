@@ -82,8 +82,8 @@ class _TimelineItemState extends State<TimelineItem> {
                           colors: [
                             widget.isFirst
                                 ? Colors.transparent
-                                : AppColors.neonCyan.withValues(alpha: 0.2),
-                            AppColors.neonCyan.withValues(alpha: 0.6),
+                                : AppColors.neonCyan.withOpacity(0.2),
+                            AppColors.neonCyan.withOpacity(0.6),
                           ],
                         ),
                       ),
@@ -97,7 +97,7 @@ class _TimelineItemState extends State<TimelineItem> {
                     decoration: BoxDecoration(
                       color: _isHovered
                           ? AppColors.neonCyan
-                          : AppColors.neonCyan.withValues(alpha: 0.8),
+                          : AppColors.neonCyan.withOpacity(0.8),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: AppColors.scaffoldBackground,
@@ -105,8 +105,8 @@ class _TimelineItemState extends State<TimelineItem> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.neonCyan.withValues(
-                            alpha: _isHovered ? 0.8 : 0.4,
+                          color: AppColors.neonCyan.withOpacity(
+                            _isHovered ? 0.8 : 0.4,
                           ),
                           blurRadius: _isHovered ? 20 : 10,
                           spreadRadius: _isHovered ? 5 : 2,
@@ -124,10 +124,10 @@ class _TimelineItemState extends State<TimelineItem> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            AppColors.neonCyan.withValues(alpha: 0.6),
+                            AppColors.neonCyan.withOpacity(0.6),
                             widget.isLast
                                 ? Colors.transparent
-                                : AppColors.neonCyan.withValues(alpha: 0.2),
+                                : AppColors.neonCyan.withOpacity(0.2),
                           ],
                         ),
                       ),
@@ -151,21 +151,17 @@ class _TimelineItemState extends State<TimelineItem> {
                   child: Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(
-                        alpha: _isHovered ? 0.08 : 0.03,
-                      ),
+                      color: Colors.white.withOpacity(_isHovered ? 0.08 : 0.03),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppColors.neonCyan.withValues(
-                          alpha: _isHovered ? 0.3 : 0.1,
+                        color: AppColors.neonCyan.withOpacity(
+                          _isHovered ? 0.3 : 0.1,
                         ),
                       ),
                       boxShadow: _isHovered
                           ? [
                               BoxShadow(
-                                color: AppColors.neonCyan.withValues(
-                                  alpha: 0.1,
-                                ),
+                                color: AppColors.neonCyan.withOpacity(0.1),
                                 blurRadius: 30,
                                 spreadRadius: -5,
                               ),
@@ -196,14 +192,10 @@ class _TimelineItemState extends State<TimelineItem> {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.neonCyan.withValues(
-                                  alpha: 0.1,
-                                ),
+                                color: AppColors.neonCyan.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: AppColors.neonCyan.withValues(
-                                    alpha: 0.3,
-                                  ),
+                                  color: AppColors.neonCyan.withOpacity(0.3),
                                 ),
                               ),
                               child: Text(
@@ -231,9 +223,7 @@ class _TimelineItemState extends State<TimelineItem> {
                           widget.description,
                           style: TextStyle(
                             fontSize: 15,
-                            color: AppColors.textPrimaryDark.withValues(
-                              alpha: 0.7,
-                            ),
+                            color: AppColors.textPrimaryDark.withOpacity(0.7),
                             height: 1.5,
                           ),
                         ),

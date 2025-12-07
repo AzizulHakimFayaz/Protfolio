@@ -66,15 +66,13 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.neonCyan.withValues(alpha: 0.2)
+                            ? AppColors.neonCyan.withOpacity(0.2)
                             : Colors.transparent,
                         shape: BoxShape.circle,
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: AppColors.neonCyan.withValues(
-                                    alpha: 0.3,
-                                  ),
+                                  color: AppColors.neonCyan.withOpacity(0.3),
                                   blurRadius: 15,
                                   spreadRadius: 2,
                                 ),

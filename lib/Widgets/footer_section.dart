@@ -43,7 +43,7 @@ class _FooterSectionState extends State<FooterSection> {
               border: Border.all(color: AppColors.neonCyan, width: 1),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.neonCyan.withValues(alpha: 0.2),
+                  color: AppColors.neonCyan.withOpacity(0.2),
                   blurRadius: 20,
                 ),
               ],
@@ -152,7 +152,7 @@ class _FooterSectionState extends State<FooterSection> {
           Text(
             "© ${DateTime.now().year} Azizul Hakim. Built with Flutter.",
             style: TextStyle(
-              color: AppColors.textPrimaryDark.withValues(alpha: 0.5),
+              color: AppColors.textPrimaryDark.withOpacity(0.5),
               fontSize: 12,
             ),
           ),
@@ -192,7 +192,7 @@ class _SocialIconState extends State<_SocialIcon> {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: _isHovered
-                ? AppColors.neonPurple.withValues(alpha: 0.2)
+                ? AppColors.neonPurple.withOpacity(0.2)
                 : Colors.transparent,
             shape: BoxShape.circle,
             border: Border.all(
@@ -201,7 +201,7 @@ class _SocialIconState extends State<_SocialIcon> {
             boxShadow: _isHovered
                 ? [
                     BoxShadow(
-                      color: AppColors.neonPurple.withValues(alpha: 0.5),
+                      color: AppColors.neonPurple.withOpacity(0.5),
                       blurRadius: 15,
                     ),
                   ]

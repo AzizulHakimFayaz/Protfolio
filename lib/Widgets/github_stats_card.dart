@@ -79,7 +79,7 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
                       letterSpacing: 2.0,
                       shadows: [
                         Shadow(
-                          color: AppColors.neonCyan.withValues(alpha: 0.5),
+                          color: AppColors.neonCyan.withOpacity(0.5),
                           blurRadius: 10,
                         ),
                       ],
@@ -93,10 +93,10 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
               Container(
                 height: 220,
                 decoration: BoxDecoration(
-                  color: AppColors.scaffoldBackground.withValues(alpha: 0.3),
+                  color: AppColors.scaffoldBackground.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: AppColors.neonCyan.withValues(alpha: 0.2),
+                    color: AppColors.neonCyan.withOpacity(0.2),
                   ),
                 ),
                 padding: const EdgeInsets.all(16),
@@ -107,7 +107,7 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
                       "CONTRIBUTION MATRIX",
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.neonCyan.withValues(alpha: 0.7),
+                        color: AppColors.neonCyan.withOpacity(0.7),
                         letterSpacing: 1.5,
                       ),
                     ),
@@ -119,7 +119,7 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
                         height: 168,
                         backgroundColor: Colors.transparent,
                         contributionColors: [
-                          AppColors.textPrimaryDark.withValues(alpha: 0.05),
+                          AppColors.textPrimaryDark.withOpacity(0.05),
                           const Color(0xFF004D40),
                           const Color(0xFF00695C),
                           const Color(0xFF00897B),
@@ -129,22 +129,16 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
                         squareBorderRadius: 2.0,
                         showCalendar: true,
                         monthLabelStyle: TextStyle(
-                          color: AppColors.textPrimaryDark.withValues(
-                            alpha: 0.6,
-                          ),
+                          color: AppColors.textPrimaryDark.withOpacity(0.6),
                           fontSize: 10,
                           fontFamily: "monospace",
                         ),
                         dayLabelStyle: TextStyle(
-                          color: AppColors.textPrimaryDark.withValues(
-                            alpha: 0.6,
-                          ),
+                          color: AppColors.textPrimaryDark.withOpacity(0.6),
                           fontSize: 10,
                           fontFamily: "monospace",
                         ),
-                        emptyColor: AppColors.textPrimaryDark.withValues(
-                          alpha: 0.05,
-                        ),
+                        emptyColor: AppColors.textPrimaryDark.withOpacity(0.05),
                         loadingWidget: const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.neonCyan,
@@ -206,17 +200,17 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
             shape: BoxShape
                 .circle, // Using circle for simplicity but styled like a node
             border: Border.all(
-              color: AppColors.neonPurple.withValues(alpha: 0.5),
+              color: AppColors.neonPurple.withOpacity(0.5),
               width: 2,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.neonPurple.withValues(alpha: 0.2),
+                color: AppColors.neonPurple.withOpacity(0.2),
                 blurRadius: 15,
                 spreadRadius: 2,
               ),
             ],
-            color: AppColors.scaffoldBackground.withValues(alpha: 0.3),
+            color: AppColors.scaffoldBackground.withOpacity(0.3),
           ),
           child: Center(
             child: Column(
@@ -241,7 +235,7 @@ class _GitHubStatsCardState extends State<GitHubStatsCard> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: AppColors.neonPurple.withValues(alpha: 0.8),
+            color: AppColors.neonPurple.withOpacity(0.8),
             letterSpacing: 1.5,
             fontWeight: FontWeight.bold,
           ),
@@ -259,7 +253,7 @@ class HUDPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withValues(alpha: 0.5)
+      ..color = color.withOpacity(0.5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 

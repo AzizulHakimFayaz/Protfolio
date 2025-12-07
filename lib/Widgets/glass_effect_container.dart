@@ -31,18 +31,18 @@ class GlassEffectContainer extends StatelessWidget {
           height: height,
           padding: padding,
           decoration: BoxDecoration(
-            color: AppColors.textPrimaryDark.withValues(alpha: 0.1),
+            color: AppColors.textPrimaryDark.withOpacity(0.1),
             borderRadius: radius,
             border: Border.all(
-              color: AppColors.textPrimaryDark.withValues(alpha: 0.2),
+              color: AppColors.textPrimaryDark.withOpacity(0.2),
               width: 1.5,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.textPrimaryDark.withValues(alpha: 0.2),
-                AppColors.textPrimaryDark.withValues(alpha: 0.05),
+                AppColors.textPrimaryDark.withOpacity(0.2),
+                AppColors.textPrimaryDark.withOpacity(0.05),
               ],
             ),
           ),

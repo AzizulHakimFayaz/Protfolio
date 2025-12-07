@@ -53,7 +53,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.4,
-                  color: AppColors.textPrimaryDark.withValues(alpha: 0.7),
+                  color: AppColors.textPrimaryDark.withOpacity(0.7),
                 ),
               ),
             ],

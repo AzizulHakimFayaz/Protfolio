@@ -110,8 +110,8 @@ class _ProjectCardState extends State<_ProjectCard> {
           boxShadow: [
             BoxShadow(
               color: _isHovered
-                  ? AppColors.accentTeal.withValues(alpha: 0.15)
-                  : Colors.black.withValues(alpha: 0.05),
+                  ? AppColors.accentTeal.withOpacity(0.15)
+                  : Colors.black.withOpacity(0.05),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -170,7 +170,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.accentTeal.withValues(alpha: 0.1),
+                        color: AppColors.accentTeal.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(

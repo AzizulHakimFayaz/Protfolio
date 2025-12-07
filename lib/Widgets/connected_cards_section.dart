@@ -213,13 +213,13 @@ class CentralHubCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: AppColors.neonCyan.withValues(alpha: 0.3),
+            color: AppColors.neonCyan.withOpacity(0.3),
             blurRadius: 50,
             spreadRadius: 10,
           ),
         ],
         border: Border.all(
-          color: AppColors.neonCyan.withValues(alpha: 0.5),
+          color: AppColors.neonCyan.withOpacity(0.5),
           width: 2,
         ),
       ),
@@ -232,7 +232,7 @@ class CentralHubCard extends StatelessWidget {
             border: Border.all(color: AppColors.neonCyan, width: 3),
             boxShadow: [
               BoxShadow(
-                color: AppColors.neonCyan.withValues(alpha: 0.5),
+                color: AppColors.neonCyan.withOpacity(0.5),
                 blurRadius: 20,
                 spreadRadius: 5,
               ),
@@ -324,7 +324,7 @@ class _FeatureIconCardState extends State<FeatureIconCard> {
               boxShadow: _isHovered
                   ? [
                       BoxShadow(
-                        color: widget.color.withValues(alpha: 0.6),
+                        color: widget.color.withOpacity(0.6),
                         blurRadius: 20,
                         spreadRadius: 2,
                       ),
@@ -337,7 +337,7 @@ class _FeatureIconCardState extends State<FeatureIconCard> {
                 Icon(
                   widget.icon,
                   color: _isHovered
-                      ? widget.color.withValues(alpha: 1.0)
+                      ? widget.color.withOpacity(1.0)
                       : widget.color,
                   size: _isHovered ? 36 : 30,
                 ),
@@ -370,12 +370,12 @@ class ConnectionPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..color = AppColors.neonCyan.withValues(alpha: 0.1)
+      ..color = AppColors.neonCyan.withOpacity(0.1)
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
     final activePaint = Paint()
-      ..color = AppColors.neonCyan.withValues(alpha: 0.8)
+      ..color = AppColors.neonCyan.withOpacity(0.8)
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4);
@@ -411,7 +411,7 @@ class ConnectionPainter extends CustomPainter {
         Paint()
           ..color = isHovered
               ? AppColors.neonCyan
-              : AppColors.neonCyan.withValues(alpha: 0.3),
+              : AppColors.neonCyan.withOpacity(0.3),
       );
     }
   }

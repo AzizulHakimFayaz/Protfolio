@@ -80,25 +80,23 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        AppColors.textPrimaryDark.withValues(
-                          alpha: 0.05 + (0.05 * hoverValue),
+                        AppColors.textPrimaryDark.withOpacity(
+                          0.05 + (0.05 * hoverValue),
                         ),
-                        AppColors.textPrimaryDark.withValues(
-                          alpha: 0.01 + (0.02 * hoverValue),
+                        AppColors.textPrimaryDark.withOpacity(
+                          0.01 + (0.02 * hoverValue),
                         ),
                       ],
                     ),
                     border: Border.all(
-                      color: widget.accentColor.withValues(
-                        alpha: 0.1 + (0.3 * hoverValue),
+                      color: widget.accentColor.withOpacity(
+                        0.1 + (0.3 * hoverValue),
                       ),
                       width: 1 + (1 * hoverValue),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: widget.accentColor.withValues(
-                          alpha: 0.1 * hoverValue,
-                        ),
+                        color: widget.accentColor.withOpacity(0.1 * hoverValue),
                         blurRadius: 20,
                         spreadRadius: -5,
                       ),
@@ -115,14 +113,11 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                             flex: 2,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: widget.accentColor.withValues(
-                                  alpha: 0.1,
-                                ),
+                                color: widget.accentColor.withOpacity(0.1),
                                 border: Border(
                                   right: BorderSide(
-                                    color: AppColors.textPrimaryDark.withValues(
-                                      alpha: 0.1,
-                                    ),
+                                    color: AppColors.textPrimaryDark
+                                        .withOpacity(0.1),
                                     width: 1,
                                   ),
                                 ),
@@ -132,13 +127,11 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: widget.accentColor.withValues(
-                                      alpha: 0.2,
-                                    ),
+                                    color: widget.accentColor.withOpacity(0.2),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: widget.accentColor.withValues(
-                                          alpha: 0.4 + (0.2 * hoverValue),
+                                        color: widget.accentColor.withOpacity(
+                                          0.4 + (0.2 * hoverValue),
                                         ),
                                         blurRadius: 30 + (20 * hoverValue),
                                         spreadRadius: 5 + (2 * hoverValue),
@@ -181,7 +174,7 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: AppColors.textPrimaryDark
-                                          .withValues(alpha: 0.7),
+                                          .withOpacity(0.7),
                                       height: 1.5,
                                     ),
                                   ),
@@ -209,13 +202,13 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: widget.accentColor
-                                                .withValues(alpha: 0.5),
+                                                .withOpacity(0.5),
                                           ),
                                           borderRadius: BorderRadius.circular(
                                             20,
                                           ),
-                                          color: widget.accentColor.withValues(
-                                            alpha: 0.1 * hoverValue,
+                                          color: widget.accentColor.withOpacity(
+                                            0.1 * hoverValue,
                                           ),
                                         ),
                                         child: Row(

@@ -57,11 +57,9 @@ class _HeroParticlesState extends State<HeroParticles>
       ),
       radius: _random.nextDouble() * 3 + 1, // Size 1-4px
       color: _random.nextBool()
-          ? AppColors.particleTeal.withValues(
-              alpha: 0.4 + _random.nextDouble() * 0.4,
-            )
-          : AppColors.particleWhite.withValues(
-              alpha: 0.3 + _random.nextDouble() * 0.3,
+          ? AppColors.particleTeal.withOpacity(0.4 + _random.nextDouble() * 0.4)
+          : AppColors.particleWhite.withOpacity(
+              0.3 + _random.nextDouble() * 0.3,
             ),
     );
   }
@@ -105,14 +103,18 @@ class _Particle {
     position += velocity;
 
     // Wrap around screen
-    if (position.dx < -radius)
+    if (position.dx < -radius) {
       position = Offset(size.width + radius, position.dy);
-    if (position.dx > size.width + radius)
+    }
+    if (position.dx > size.width + radius) {
       position = Offset(-radius, position.dy);
-    if (position.dy < -radius)
+    }
+    if (position.dy < -radius) {
       position = Offset(position.dx, size.height + radius);
-    if (position.dy > size.height + radius)
+    }
+    if (position.dy > size.height + radius) {
       position = Offset(position.dx, -radius);
+    }
   }
 }
 

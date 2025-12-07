@@ -90,12 +90,10 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: Colors.white.withOpacity(0.3),
                     width: 1.5,
                   ),
-                  color: Colors.white.withValues(
-                    alpha: 0.1,
-                  ), // 10% opacity base
+                  color: Colors.white.withOpacity(0.1), // 10% opacity base
                   boxShadow: const [
                     BoxShadow(
                       color: AppColors.accentTealGlow,
@@ -142,7 +140,7 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                           "Software & Flutter Developer",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AppColors.textWhite.withValues(alpha: 0.9),
+                            color: AppColors.textWhite.withOpacity(0.9),
                             fontSize: size.width < 600 ? 20 : 28,
                             fontWeight: FontWeight.w300,
                           ),
@@ -202,7 +200,7 @@ class _TypewriterSubtitle extends StatelessWidget {
       "Building modern apps with Flutter, Python, and Django",
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Colors.white.withValues(alpha: 0.8),
+        color: Colors.white.withOpacity(0.8),
         fontSize: 16,
         height: 1.5,
       ),
@@ -253,7 +251,7 @@ class _FloatingProfileImageState extends State<_FloatingProfileImage>
           color: Colors.white, // Outer ring
           boxShadow: [
             BoxShadow(
-              color: AppColors.accentTeal.withValues(alpha: 0.3),
+              color: AppColors.accentTeal.withOpacity(0.3),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -312,7 +310,7 @@ class _HeroButtonState extends State<_HeroButton> {
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: AppColors.accentTeal.withValues(alpha: 0.4),
+                    color: AppColors.accentTeal.withOpacity(0.4),
                     blurRadius: 20,
                     offset: const Offset(0, 5),
                   ),

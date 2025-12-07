@@ -59,7 +59,7 @@ class ContactFooterSection extends StatelessWidget {
               Text(
                 "© 2025 Azizul Hakim Fayaz — Built with Flutter",
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.6),
+                  color: Colors.white.withOpacity(0.6),
                   fontSize: 14,
                 ),
               ),
@@ -90,7 +90,7 @@ class _ContactForm extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.accentTeal.withValues(alpha: 0.4),
+                color: AppColors.accentTeal.withOpacity(0.4),
                 blurRadius: 20,
                 offset: const Offset(0, 5),
               ),
@@ -180,7 +180,7 @@ class _SocialIconState extends State<_SocialIcon> {
           decoration: BoxDecoration(
             color: _isHovered
                 ? AppColors.accentTeal
-                : Colors.white.withValues(alpha: 0.1),
+                : Colors.white.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(

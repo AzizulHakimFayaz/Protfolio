@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:protfolio_website/Widgets/about_section.dart';
 import 'package:protfolio_website/Widgets/contact_footer.dart';
@@ -7,9 +8,34 @@ import 'package:protfolio_website/Widgets/project_showcase.dart';
 import 'package:protfolio_website/Widgets/skills_section.dart';
 import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:protfolio_website/Widgets/animated_navbar.dart';
+import 'package:protfolio_website/Widgets/github/github_contribution_section.dart';
 
 void main() {
-  runApp(const MyApp());
+  runZonedGuarded(
+    () {
+      ErrorWidget.builder = (FlutterErrorDetails details) {
+        return Material(
+          color: Colors.deepOrange,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Text(
+                  details.exceptionAsString(),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+        );
+      };
+      runApp(const MyApp());
+    },
+    (error, stackTrace) {
+      debugPrint('Global Error: $error');
+      debugPrint('Stack Trace: $stackTrace');
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -86,6 +112,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   scrollController: _scrollController,
                 ),
                 ExperienceSection(key: _experienceKey),
+                const GitHubContributionSection(),
                 ContactFooterSection(key: _contactKey),
               ],
             ),
