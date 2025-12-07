@@ -24,20 +24,6 @@ import 'package:protfolio_website/models/contribution_model.dart';
           }
         }
       }
-    ''';
-
-    try {
-      final response = await http.post(
-        Uri.parse(_graphQLEndpoint),
-        headers: {
-          'Authorization': 'Bearer $_token',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'query': query,
-          'variables': {'username': _username},
-        }),
-      );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
