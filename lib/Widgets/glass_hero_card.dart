@@ -90,16 +90,23 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
-                    width: 1.5,
+                    color: Colors.white.withOpacity(0.2),
+                    width: 1.0,
                   ),
-                  color: Colors.white.withOpacity(0.1), // 10% opacity base
-                  boxShadow: const [
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white.withOpacity(0.15),
+                      Colors.white.withOpacity(0.05),
+                    ],
+                  ),
+                  boxShadow: [
                     BoxShadow(
-                      color: AppColors.accentTealGlow,
-                      blurRadius: 40,
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 30,
                       spreadRadius: -10,
-                      offset: Offset(0, 20),
+                      offset: const Offset(0, 20),
                     ),
                   ],
                 ),

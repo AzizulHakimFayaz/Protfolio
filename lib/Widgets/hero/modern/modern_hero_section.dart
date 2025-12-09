@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:protfolio_website/Particle_effect/hero_particles.dart';
 import 'package:protfolio_website/Widgets/glass_hero_card.dart';
 import 'package:protfolio_website/Widgets/hero/modern/floating_icon_card.dart';
+import 'package:protfolio_website/Widgets/hero/modern/curved_connection_lines.dart';
 
 class ModernHeroSection extends StatefulWidget {
   final VoidCallback onViewWork;
@@ -36,53 +37,51 @@ class _ModernHeroSectionState extends State<ModernHeroSection> {
     final size = MediaQuery.of(context).size;
     final isMobile = size.width < 800;
 
-    // Define icons layout (Relative positions from center)
-    // We adjust spread based on screen size
-    // INCREASED SPREAD to fit bigger icons
-    // final double spreadX = isMobile ? size.width * 0.4 : size.width * 0.45;
-
-    // Only show a few icons on mobile to prevent clutter
+    // EXACT icon positions matching reference image with Vertically Compressed Y coordinates
+    // to prevent clipping at the screen edges.
     final List<_FloatingIconConfig> icons = isMobile
         ? [
             _FloatingIconConfig(FontAwesomeIcons.github, -0.35, -0.3, 2.5),
             _FloatingIconConfig(FontAwesomeIcons.python, 0.35, -0.35, 3.0),
-            _FloatingIconConfig(
-              Icons.flutter_dash,
-              -0.3,
-              0.35,
-              2.8,
-            ), // Updated to Material
-            _FloatingIconConfig(FontAwesomeIcons.react, 0.3, 0.3, 3.2),
+            _FloatingIconConfig(Icons.cloud, -0.3, 0.35, 2.8),
+            _FloatingIconConfig(Icons.settings, 0.3, 0.3, 3.2),
           ]
         : [
-            // Left Side - Using more standard icons where possible to avoid load issues
-            _FloatingIconConfig(FontAwesomeIcons.github, -0.35, -0.25, 2.5),
-            _FloatingIconConfig(FontAwesomeIcons.linkedin, -0.42, 0.1, 4.0),
-            _FloatingIconConfig(FontAwesomeIcons.instagram, -0.25, 0.35, 3.0),
-            _FloatingIconConfig(Icons.terminal, -0.15, -0.4, 5.0), // Material
-            // Right Side
-            _FloatingIconConfig(FontAwesomeIcons.python, 0.35, -0.3, 3.2),
+            // Left side icons (Compressed Y)
             _FloatingIconConfig(
-              Icons.flutter_dash,
+              FontAwesomeIcons.github,
+              -0.43,
+              -0.10,
+              2.5,
+            ), // GitHub
+            _FloatingIconConfig(
+              FontAwesomeIcons.linkedin,
+              -0.38,
+              0.15,
+              4.0,
+            ), // LinkedIn
+            _FloatingIconConfig(
+              FontAwesomeIcons.instagram,
+              -0.28,
+              0.36,
+              3.0,
+            ), // Instagram
+            // Top arc icons (Lowered from edge)
+            _FloatingIconConfig(Icons.terminal, -0.18, -0.39, 5.0), // Terminal
+            _FloatingIconConfig(Icons.storage, -0.05, -0.42, 5.5), // Database
+            _FloatingIconConfig(Icons.cloud, 0.20, -0.41, 4.5), // Cloud
+            // Right side icons (Compressed Y)
+            _FloatingIconConfig(
+              FontAwesomeIcons.python,
               0.42,
-              0.05,
-              2.8,
-            ), // Material
-            _FloatingIconConfig(Icons.code, 0.28, 0.38, 3.5), // Material
-            _FloatingIconConfig(Icons.cloud, 0.18, -0.38, 4.5), // Material
-            // More scattered
-            _FloatingIconConfig(
-              Icons.laptop_chromebook, // Material
-              0.05,
-              0.45,
-              6.0,
-            ),
-            _FloatingIconConfig(
-              Icons.storage, // Material
-              -0.05,
-              -0.45,
-              5.5,
-            ),
+              -0.15,
+              3.2,
+            ), // Python
+            _FloatingIconConfig(Icons.smart_toy, 0.45, 0.07, 3.8), // Robot/AI
+            _FloatingIconConfig(Icons.settings, 0.40, 0.24, 3.5), // Gear
+            // Bottom icons (Raised from edge)
+            _FloatingIconConfig(Icons.laptop_mac, 0.05, 0.42, 6.0), // Laptop
+            _FloatingIconConfig(Icons.code, 0.35, 0.38, 5.5), // Code brackets
           ];
 
     return MouseRegion(
@@ -99,8 +98,8 @@ class _ModernHeroSectionState extends State<ModernHeroSection> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFF081521), // Deep Space Blue
-                    Color(0xFF0C1C27), // Slightly lighter
+                    Color(0xFF02121C), // Deep Teal-Blue
+                    Color(0xFF082838), // Slightly lighter Teal-Blue
                   ],
                 ),
               ),
@@ -117,6 +116,9 @@ class _ModernHeroSectionState extends State<ModernHeroSection> {
                 );
               },
             ),
+
+            // 2.5. Curved Connection Lines (Between particles and icons)
+            CurvedConnectionLines(screenSize: size, isMobile: isMobile),
 
             // 3. Floating Icons Layer (Parallax)
             // INCREASED SIZES: 40->60 (Mobile), 55->80 (Desktop)
