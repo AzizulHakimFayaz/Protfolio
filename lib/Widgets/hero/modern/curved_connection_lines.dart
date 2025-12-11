@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 /// Draws curved, glowing network lines around the hero card
-class CurvedConnectionLines extends StatelessWidget {
+class CurvedConnectionLines extends StatefulWidget {
   final Size screenSize;
   final bool isMobile;
 
@@ -14,13 +14,43 @@ class CurvedConnectionLines extends StatelessWidget {
   });
 
   @override
+  State<CurvedConnectionLines> createState() => _CurvedConnectionLinesState();
+}
+
+class _CurvedConnectionLinesState extends State<CurvedConnectionLines>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // Loop the animation for continuous traffic flow
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: screenSize,
-      painter: _ConnectionLinesPainter(
-        screenSize: screenSize,
-        isMobile: isMobile,
-      ),
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          size: widget.screenSize,
+          painter: _ConnectionLinesPainter(
+            screenSize: widget.screenSize,
+            isMobile: widget.isMobile,
+            animationValue: _controller.value,
+          ),
+        );
+      },
     );
   }
 }
@@ -28,8 +58,13 @@ class CurvedConnectionLines extends StatelessWidget {
 class _ConnectionLinesPainter extends CustomPainter {
   final Size screenSize;
   final bool isMobile;
+  final double animationValue;
 
-  _ConnectionLinesPainter({required this.screenSize, required this.isMobile});
+  _ConnectionLinesPainter({
+    required this.screenSize,
+    required this.isMobile,
+    required this.animationValue,
+  });
 
   // Palette for lines
   static const _palette = <Color>[
@@ -50,9 +85,7 @@ class _ConnectionLinesPainter extends CustomPainter {
         ? size.width * 0.85
         : size.width * 0.92;
 
-    // Approximate height based on GlassHeroCard content (Title, Subtitle, Buttons, etc.)
-    // GlassCard uses padding + content.
-    // Estimated: 140(pad) + 50(title) + 30(sub) + 24(type) + 50(btns) + 60(profile overlap) + gaps ~ 450-500
+    // Approximate height based on GlassHeroCard content
     final double cardHeight = isMobile ? size.height * 0.6 : 480.0;
 
     final Rect cardRect = Rect.fromCenter(
@@ -97,16 +130,16 @@ class _ConnectionLinesPainter extends CustomPainter {
     // Background web (very faint)
     _drawAmbientLines(canvas, size, centerX, centerY, cardRect);
 
-    // === NEW: Fans that make lines come out from the card edge ===
+    // === Fans that make lines come out from the card edge ===
     if (!isMobile) {
-      // LEFT edge fan (like your screenshot): to GitHub, LinkedIn, Instagram
+      // LEFT edge fan: to GitHub, LinkedIn, Instagram
       _drawEdgeFan(
         canvas: canvas,
         card: cardRect,
         side: _Side.left,
-        portT: 0.34, // position along left edge (0 top → 1 bottom)
-        fanSpreadDeg: 16, // how wide the fan opens
-        portKick: 36, // straight segment before curving
+        portT: 0.34,
+        fanSpreadDeg: 16,
+        portKick: 36,
         bulge: 0.22,
         cx: centerX,
         cy: centerY,
@@ -129,7 +162,7 @@ class _ConnectionLinesPainter extends CustomPainter {
         colorOffset: 1,
       );
 
-      // (Optional) BOTTOM fan: to Laptop
+      // BOTTOM fan: to Laptop
       _drawEdgeFan(
         canvas: canvas,
         card: cardRect,
@@ -145,7 +178,7 @@ class _ConnectionLinesPainter extends CustomPainter {
       );
     }
 
-    // Main connections (glowing, multi-colour) – keep your existing web
+    // Main connections (glowing, multi-colour)
     final List<_Connection> connections = isMobile
         ? [
             _Connection(0, 1, 0.30),
@@ -237,7 +270,7 @@ class _ConnectionLinesPainter extends CustomPainter {
     }
   }
 
-  /// Draw one glowing curved connection (quadratic)
+  /// Draw one glowing curved connection with animated packet
   void _drawConnection(
     Canvas canvas,
     Offset start,
@@ -268,6 +301,9 @@ class _ConnectionLinesPainter extends CustomPainter {
 
     canvas.drawPath(path, glowPaint);
     canvas.drawPath(path, linePaint);
+
+    // Draw Packet
+    _drawPacket(canvas, path, baseColor, colorSlot);
   }
 
   /// Bezier curve that bulges away from the center (around the card)
@@ -433,12 +469,59 @@ class _ConnectionLinesPainter extends CustomPainter {
 
     canvas.drawPath(path, glow);
     canvas.drawPath(path, line);
+
+    // Draw animated packet
+    _drawPacket(canvas, path, color, slot);
+  }
+
+  /// Draws a moving 'light packet' along the path
+  void _drawPacket(Canvas canvas, Path path, Color color, int index) {
+    if (animationValue == 0) return;
+
+    final metrics = path.computeMetrics();
+    for (final metric in metrics) {
+      // Offset the animation so packets don't all move in perfect sync
+      // 'index' is used to stagger them
+      final shift = (index * 0.23);
+      final t = (animationValue + shift) % 1.0;
+      final distance = metric.length * t;
+
+      final pos = metric.getTangentForOffset(distance)?.position;
+      if (pos != null) {
+        // Core dot
+        final dotPaint = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(pos, 2.0, dotPaint);
+
+        // Glow halo
+        final haloPaint = Paint()
+          ..color = color.withOpacity(0.6)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8)
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(pos, 6.0, haloPaint);
+
+        // Impact Glow at the end (when t is near 1.0)
+        if (t > 0.95) {
+          final endPos = metric.getTangentForOffset(metric.length)?.position;
+          if (endPos != null) {
+            final double impact = (t - 0.95) / 0.05; // 0.0 to 1.0
+            final impactPaint = Paint()
+              ..color = color.withOpacity(0.5 * impact)
+              ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10)
+              ..style = PaintingStyle.fill;
+            canvas.drawCircle(endPos, 12.0 * impact, impactPaint);
+          }
+        }
+      }
+    }
   }
 
   @override
   bool shouldRepaint(_ConnectionLinesPainter oldDelegate) {
     return oldDelegate.screenSize != screenSize ||
-        oldDelegate.isMobile != isMobile;
+        oldDelegate.isMobile != isMobile ||
+        oldDelegate.animationValue != animationValue;
   }
 }
 
