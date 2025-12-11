@@ -97,13 +97,15 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.white.withOpacity(0.15),
-                      Colors.white.withOpacity(0.05),
+                      Colors.white.withOpacity(0.10), // Reduced opacity
+                      Colors.white.withOpacity(0.02), // Reduced opacity
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(
+                        0.05,
+                      ), // Reduced shadow visibility
                       blurRadius: 30,
                       spreadRadius: -10,
                       offset: const Offset(0, 20),
@@ -113,7 +115,10 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+                    filter: ImageFilter.blur(
+                      sigmaX: 5,
+                      sigmaY: 5,
+                    ), // Significantly reduced blur to reveal lines
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
