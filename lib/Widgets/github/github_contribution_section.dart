@@ -75,7 +75,7 @@ class _GitHubContributionSectionState extends State<GitHubContributionSection> {
                       particleCount: 80,
                       particleColor: AppColors.accentTeal.withOpacity(0.2),
                       lineColor: AppColors.accentTeal.withOpacity(0.2),
-                      speedMultiplier: 0.014,
+                      speedMultiplier: 0.0008,
                       connectionDistance: 70,
                       lineWidth: 2,
                     ),

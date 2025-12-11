@@ -46,7 +46,7 @@ class _ConnectionLinesPainter extends CustomPainter {
           ]
         : [
             // EXACT positions matching reference image (Compressed Y for fit)
-            _IconPosition(-0.43, -0.10), // 0: GitHub
+            _IconPosition(-0.33, -0.25), // 0: GitHub
             _IconPosition(-0.38, 0.15), // 1: LinkedIn
             _IconPosition(-0.28, 0.36), // 2: Instagram
             _IconPosition(-0.18, -0.39), // 3: Terminal
@@ -78,8 +78,10 @@ class _ConnectionLinesPainter extends CustomPainter {
         : [
             // --- Outer Ring ---
             _Connection(0, 1, 0.30), // GitHub -> LinkedIn
+            _Connection(0, 9, 0.30), // LinkedIn -> GitHub
             _Connection(1, 2, 0.30), // LinkedIn -> Instagram
             _Connection(2, 9, 0.25), // Instagram -> Laptop
+            _Connection(1, 3, 0.25), // Laptop -> GitHub
             _Connection(9, 10, 0.25), // Laptop -> Code
             _Connection(10, 8, 0.25), // Code -> Gear
             _Connection(8, 7, 0.30), // Gear -> Brain

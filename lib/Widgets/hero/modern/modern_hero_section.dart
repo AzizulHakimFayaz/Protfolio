@@ -50,19 +50,19 @@ class _ModernHeroSectionState extends State<ModernHeroSection> {
             // Left side icons (Compressed Y)
             _FloatingIconConfig(
               FontAwesomeIcons.github,
-              -0.43,
-              -0.10,
+              -0.33,
+              -0.25,
               2.5,
             ), // GitHub
             _FloatingIconConfig(
               FontAwesomeIcons.linkedin,
-              -0.38,
-              0.15,
+              -0.43,
+              0.05,
               4.0,
             ), // LinkedIn
             _FloatingIconConfig(
               FontAwesomeIcons.instagram,
-              -0.28,
+              -0.23,
               0.36,
               3.0,
             ), // Instagram
