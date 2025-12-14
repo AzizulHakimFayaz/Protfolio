@@ -9,7 +9,7 @@ class GithubService {
   // WARNING: Do not commit this token to a public repository.
   static const String _token = String.fromEnvironment(
     'GITHUB_TOKEN',
-    defaultValue: '', // Will use empty string if not provided
+    defaultValue: '',
   );
 
   static const String _graphQLEndpoint = 'https://api.github.com/graphql';
