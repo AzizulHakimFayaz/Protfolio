@@ -9,6 +9,7 @@ import 'package:protfolio_website/Widgets/skills_section.dart';
 import 'package:protfolio_website/constants/app_colors.dart';
 import 'package:protfolio_website/Widgets/animated_navbar.dart';
 import 'package:protfolio_website/Widgets/github/github_contribution_section.dart';
+import 'package:protfolio_website/Widgets/scroll_animated_item.dart';
 
 void main() {
   runZonedGuarded(
@@ -72,9 +73,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final GlobalKey _heroKey = GlobalKey();
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _skillsKey = GlobalKey();
-  final GlobalKey _projectsKey = GlobalKey();
+  // _projectsKey is replaced by _projectShowcaseStateKey to allow state access + context
   final GlobalKey _experienceKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
+
+  // State Key for ProjectShowcase to access its methods
+  final GlobalKey<ProjectShowcaseState> _projectShowcaseStateKey =
+      GlobalKey<ProjectShowcaseState>();
 
   void _scrollToSection(GlobalKey key) {
     Scrollable.ensureVisible(
@@ -82,6 +87,17 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       duration: const Duration(milliseconds: 800),
       curve: Curves.easeInOutCubic,
     );
+  }
+
+  void _handleHeroIconTap(String tag) {
+    // 1. Scroll to Projects Section first
+    _scrollToSection(_projectShowcaseStateKey);
+
+    // 2. Then find and scroll to the specific project
+    // Tiny delay to allow section scroll to start/settle implies better UX
+    Future.delayed(const Duration(milliseconds: 800), () {
+      _projectShowcaseStateKey.currentState?.scrollToProjectWithTag(tag);
+    });
   }
 
   @override
@@ -100,20 +116,30 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             controller: _scrollController,
             child: Column(
               children: [
-                HeroSection(
-                  key: _heroKey,
-                  onViewWork: () => _scrollToSection(_projectsKey),
-                  onContact: () => _scrollToSection(_contactKey),
+                ScrollAnimatedItem(
+                  child: HeroSection(
+                    key: _heroKey,
+                    onViewWork: () =>
+                        _scrollToSection(_projectShowcaseStateKey),
+                    onContact: () => _scrollToSection(_contactKey),
+                    onIconTap: _handleHeroIconTap,
+                  ),
                 ),
                 AboutSection(key: _aboutKey),
-                SkillsSection(key: _skillsKey),
-                ProjectShowcase(
-                  key: _projectsKey,
-                  scrollController: _scrollController,
+                ScrollAnimatedItem(child: SkillsSection(key: _skillsKey)),
+                ScrollAnimatedItem(
+                  child: ProjectShowcase(
+                    key: _projectShowcaseStateKey,
+                    scrollController: _scrollController,
+                  ),
                 ),
-                ExperienceSection(key: _experienceKey),
-                const GitHubContributionSection(),
-                ContactFooterSection(key: _contactKey),
+                ScrollAnimatedItem(
+                  child: ExperienceSection(key: _experienceKey),
+                ),
+                ScrollAnimatedItem(child: const GitHubContributionSection()),
+                ScrollAnimatedItem(
+                  child: ContactFooterSection(key: _contactKey),
+                ),
               ],
             ),
           ),
@@ -130,7 +156,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   _heroKey,
                   _aboutKey,
                   _skillsKey,
-                  _projectsKey,
+                  _projectShowcaseStateKey, // Updated to use the state key which handles both context and state
                   _contactKey,
                 ];
                 if (index < keys.length) {

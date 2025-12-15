@@ -136,10 +136,11 @@ class _ConnectedCardsSectionState extends State<ConnectedCardsSection> {
               duration: const Duration(seconds: 6),
               delay: const Duration(milliseconds: 600),
               child: FeatureIconCard(
-                icon: Icons.facebook,
+                icon: Icons
+                    .facebook, // Keep built-in or use FontAwesome if imported
                 color: const Color(0xFF1877F2),
                 label: "Facebook",
-                url: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME",
+                url: "https://www.youtube.com/@AzizulHakim-0", // Placeholder
                 onHover: (isHovered) => _onHover(5, isHovered),
               ),
             ),
@@ -153,26 +154,27 @@ class _ConnectedCardsSectionState extends State<ConnectedCardsSection> {
               duration: const Duration(seconds: 5),
               delay: const Duration(milliseconds: 900),
               child: FeatureIconCard(
-                icon: Icons.work,
+                icon: Icons
+                    .business, // Using built-in icon as fallback or FontAwesome
                 color: const Color(0xFF0A66C2),
                 label: "LinkedIn",
-                url: "https://www.linkedin.com/in/YOUR_LINKEDIN_USERNAME",
+                url: "https://linkedin.com/in/azizulhakimfayaz",
                 onHover: (isHovered) => _onHover(6, isHovered),
               ),
             ),
           ),
 
-          // Twitter (Middle Right) - Index 7
+          // GitHub (Replaces Twitter) (Middle Right) - Index 7
           Positioned(
             right: 50,
             child: FloatingCard(
               duration: const Duration(seconds: 6),
               delay: const Duration(milliseconds: 1200),
               child: FeatureIconCard(
-                icon: Icons.flutter_dash, // Using as Twitter bird substitute
-                color: const Color(0xFF1DA1F2),
-                label: "Twitter",
-                url: "https://twitter.com/YOUR_TWITTER_USERNAME",
+                icon: Icons.code, // Using code icon for GitHub
+                color: const Color(0xFF181717), // GitHub Black
+                label: "GitHub",
+                url: "https://github.com/AzizulHakimFayaz",
                 onHover: (isHovered) => _onHover(7, isHovered),
               ),
             ),
@@ -186,10 +188,10 @@ class _ConnectedCardsSectionState extends State<ConnectedCardsSection> {
               duration: const Duration(seconds: 7),
               delay: const Duration(milliseconds: 400),
               child: FeatureIconCard(
-                icon: Icons.play_circle_outline,
+                icon: Icons.play_circle_fill,
                 color: const Color(0xFFFF0000),
                 label: "YouTube",
-                url: "https://www.youtube.com/@YOUR_YOUTUBE_CHANNEL",
+                url: "https://www.youtube.com/", // Placeholder
                 onHover: (isHovered) => _onHover(8, isHovered),
               ),
             ),
@@ -287,8 +289,15 @@ class _FeatureIconCardState extends State<FeatureIconCard> {
   Future<void> _launchUrl() async {
     if (widget.url != null) {
       final uri = Uri.parse(widget.url!);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      debugPrint('Attempting to launch: $uri');
+      try {
+        if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+          debugPrint('Could not launch $uri');
+          // Try default mode as fallback
+          await launchUrl(uri);
+        }
+      } catch (e) {
+        debugPrint('Error launching URL: $e');
       }
     }
   }
@@ -311,48 +320,52 @@ class _FeatureIconCardState extends State<FeatureIconCard> {
         width: 100,
         height: 100,
         borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-          onTap: widget.url != null ? _launchUrl : null,
-          borderRadius: BorderRadius.circular(20),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            transform: _isHovered
-                ? (Matrix4.identity()..scale(1.15)) // Increased scale on hover
-                : Matrix4.identity(),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: _isHovered
-                  ? [
-                      BoxShadow(
-                        color: widget.color.withOpacity(0.6),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                      ),
-                    ]
-                  : [],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  widget.icon,
-                  color: _isHovered
-                      ? widget.color.withOpacity(1.0)
-                      : widget.color,
-                  size: _isHovered ? 36 : 30,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  widget.label,
-                  style: TextStyle(
+        child: Material(
+          type: MaterialType.transparency, // Required for InkWell to work
+          child: InkWell(
+            onTap: widget.url != null ? _launchUrl : null,
+            borderRadius: BorderRadius.circular(20),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              transform: _isHovered
+                  ? (Matrix4.identity()
+                      ..scale(1.15)) // Increased scale on hover
+                  : Matrix4.identity(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: _isHovered
+                    ? [
+                        BoxShadow(
+                          color: widget.color.withOpacity(0.6),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                        ),
+                      ]
+                    : [],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    widget.icon,
                     color: _isHovered
-                        ? AppColors.textPrimaryDark
-                        : Colors.white70,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
+                        ? widget.color.withOpacity(1.0)
+                        : widget.color,
+                    size: _isHovered ? 36 : 30,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                      color: _isHovered
+                          ? AppColors.textPrimaryDark
+                          : Colors.white70,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -393,7 +406,7 @@ class ConnectionPainter extends CustomPainter {
     final rightPoints = [
       Offset(size.width - 170, 100), // Facebook (Index 5)
       Offset(size.width - 110, 210), // LinkedIn (Index 6)
-      Offset(size.width - 90, size.height / 2), // Twitter (Index 7)
+      Offset(size.width - 90, size.height / 2), // GitHub (Index 7)
       Offset(size.width - 130, size.height - 210), // YouTube (Index 8)
     ];
 

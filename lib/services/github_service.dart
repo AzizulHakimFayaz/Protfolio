@@ -7,10 +7,7 @@ class GithubService {
   static const String _username = 'AzizulHakimFayaz'; // Default username
   // TODO: Replace with your actual GitHub Personal Access Token
   // WARNING: Do not commit this token to a public repository.
-  static const String _token = String.fromEnvironment(
-    'GITHUB_TOKEN',
-    defaultValue: '',
-  );
+  static const String _token = String.fromEnvironment('GITHUB_TOKEN');
 
   static const String _graphQLEndpoint = 'https://api.github.com/graphql';
 

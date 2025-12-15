@@ -72,6 +72,7 @@ class _TechGraphVisualizerState extends State<TechGraphVisualizer>
         ),
       ),
       child: Stack(
+        alignment: Alignment.center,
         children: [
           // Node Graph
           Positioned.fill(
@@ -90,43 +91,44 @@ class _TechGraphVisualizerState extends State<TechGraphVisualizer>
             ),
           ),
 
-          // Floating Icons (only if list is not empty)
+          // Orbiting Icons
           if (widget.techIcons.isNotEmpty)
-            ...List.generate(widget.techIcons.length, (index) {
-              return _FloatingIcon(
-                icon: widget.techIcons[index],
-                color: widget.accentColor,
-                delay: index * 1000,
-                isActive: widget.isActive,
-                position: _getRandomPosition(index),
-              );
-            }),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Stack(
+                  children: List.generate(widget.techIcons.length, (index) {
+                    // Angular spacing
+                    final double step = (2 * math.pi) / widget.techIcons.length;
+                    // Current angle + global rotation (clockwise)
+                    final double angle =
+                        (index * step) + (_controller.value * 2 * math.pi);
 
-          // Floating Labels (only if list is not empty)
-          if (widget.techLabels.isNotEmpty)
-            ...List.generate(widget.techLabels.length, (index) {
-              return _FloatingLabel(
-                label: widget.techLabels[index],
-                color: widget.accentColor,
-                delay: index * 1500 + 500,
-                isActive: widget.isActive,
-                position: _getRandomPosition(index + widget.techIcons.length),
-              );
-            }),
+                    // Radius (0.6 to 0.75 slightly oscillating for organic feel)
+                    final double radius = 0.7 + (math.sin(angle * 3) * 0.05);
+
+                    return Align(
+                      alignment: Alignment(
+                        math.cos(angle) * radius,
+                        math.sin(angle) * radius,
+                      ),
+                      child: _OrbitingItem(
+                        icon: widget.techIcons[index],
+                        color: widget.accentColor,
+                        isActive: widget.isActive,
+                        angle: angle, // Pass angle to counter-rotate if needed
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+
+          // Floating Labels (Keep them random or static for now to avoid clutter)
+          // Removed strictly to focus on the request "icon will move clockwise" and clean up visual
         ],
       ),
     );
-  }
-
-  Offset _getRandomPosition(int seed) {
-    // Return a somewhat random but distributed position relative to center
-    // Avoiding the very center where the main icon is
-    final r = math.Random(seed);
-    double angle = r.nextDouble() * 2 * math.pi;
-    double radius = 0.3 + r.nextDouble() * 0.4; // 30% to 70% from center
-
-    // Convert to alignment (-1 to 1)
-    return Offset(math.cos(angle) * radius, math.sin(angle) * radius);
   }
 
   void _updateNodes() {
@@ -138,6 +140,48 @@ class _TechGraphVisualizerState extends State<TechGraphVisualizer>
       if (node.x < 0 || node.x > 1) node.dx *= -1;
       if (node.y < 0 || node.y > 1) node.dy *= -1;
     }
+  }
+}
+
+class _OrbitingItem extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final bool isActive;
+  final double angle;
+
+  const _OrbitingItem({
+    required this.icon,
+    required this.color,
+    required this.isActive,
+    required this.angle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      // Counter-rotate the icon so it stays upright while orbiting
+      angle: 0,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        opacity: isActive ? 1.0 : 0.0,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.black54,
+            shape: BoxShape.circle,
+            border: Border.all(color: color.withOpacity(0.5), width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.3),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+      ),
+    );
   }
 }
 

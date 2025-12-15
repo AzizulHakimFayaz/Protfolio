@@ -31,14 +31,25 @@ class ProjectShowcase extends StatefulWidget {
   const ProjectShowcase({super.key, required this.scrollController});
 
   @override
-  State<ProjectShowcase> createState() => _ProjectShowcaseState();
+  ProjectShowcaseState createState() => ProjectShowcaseState();
 }
 
-class _ProjectShowcaseState extends State<ProjectShowcase> {
+class ProjectShowcaseState extends State<ProjectShowcase> {
   final GlobalKey _sectionKey = GlobalKey();
 
   // Projects Data
   final List<ProjectData> _projects = const [
+    ProjectData(
+      title: "Advanced Particle Effects",
+      description:
+          "A powerful and customizable Flutter package that adds beautiful, high-performance particle effects to your apps. Includes dynamic coloring, interactive behavior, presets like rain, snow, smoke, and more — perfect for backgrounds, hero sections, and dynamic UI elements.",
+      tags: ["Flutter", "Dart", "Particles", "Animation", "UI"],
+      link: "https://pub.dev/packages/advanced_particle_effects",
+      icon: Icons.opacity,
+      accentColor: AppColors.accentBlue,
+      techIcons: [Icons.flutter_dash, Icons.animation, Icons.touch_app],
+      techLabels: ["Custom UI", "Animation", "Interactive"],
+    ),
     ProjectData(
       title: "Flutter Calculator App",
       description:
@@ -90,6 +101,47 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
   void dispose() {
     widget.scrollController.removeListener(_onScroll);
     super.dispose();
+  }
+
+  void scrollToProjectWithTag(String tag) {
+    if (_sectionKey.currentContext == null) return;
+
+    // Find first project with matching tag (case-insensitive)
+    int index = _projects.indexWhere(
+      (p) =>
+          p.tags.any((t) => t.toLowerCase() == tag.toLowerCase()) ||
+          p.techLabels.any((l) => l.toLowerCase().contains(tag.toLowerCase())),
+    );
+
+    if (index != -1) {
+      // Get Section Position
+      final RenderBox renderBox =
+          _sectionKey.currentContext!.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero);
+
+      // Calculate absolute scroll position
+      // Current Scroll Position + Relative Position of Section + Card Offset
+      double currentScroll = widget.scrollController.offset;
+      double sectionTop = currentScroll + position.dy;
+
+      // Target Scroll = Section Top + Index * (Card Height + Spacing)
+      // We want to center it a bit better, but top alignment is safest for logic
+      double targetScroll = sectionTop + (index * (_cardHeight + _cardSpacing));
+
+      // Adjust to properly trigger the "active" state logic which uses screen center
+      // The _onScroll uses: relativeScreenCenter = -topY + (screenHeight / 2.5)
+      // So we want the card to be at (screenHeight / 2.5) relative to top
+      double screenHeight = MediaQuery.of(context).size.height;
+      targetScroll -= (screenHeight / 3); // Position slightly above center
+
+      widget.scrollController.animateTo(
+        targetScroll,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.easeInOutCubic,
+      );
+    } else {
+      debugPrint("No project found with tag: $tag");
+    }
   }
 
   void _onScroll() {

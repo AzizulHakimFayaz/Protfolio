@@ -176,6 +176,15 @@ class _GlassHeroCardState extends State<GlassHeroCard>
                               onPressed: widget.onViewWork,
                             ),
                             _HeroButton(
+                              text: "Download CV",
+                              isPrimary: false,
+                              icon: Icons.download_rounded,
+                              onPressed: () {
+                                debugPrint("Download CV Clicked");
+                                // TODO: Implement actual download logic
+                              },
+                            ),
+                            _HeroButton(
                               text: "Contact Me",
                               isPrimary: false,
                               onPressed: widget.onContact,
@@ -285,12 +294,14 @@ class _HeroButton extends StatefulWidget {
   final String text;
   final bool isPrimary;
   final VoidCallback onPressed;
+  final IconData? icon;
 
   const _HeroButton({
     super.key,
     required this.text,
     required this.isPrimary,
     required this.onPressed,
+    this.icon,
   });
 
   @override
@@ -339,15 +350,30 @@ class _HeroButtonState extends State<_HeroButton> {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          child: Text(
-            widget.text,
-            style: TextStyle(
-              color: widget.isPrimary
-                  ? Colors.white
-                  : (_isHovered ? AppColors.accentTeal : Colors.white),
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.icon != null) ...[
+                Icon(
+                  widget.icon,
+                  color: widget.isPrimary
+                      ? Colors.white
+                      : (_isHovered ? AppColors.accentTeal : Colors.white),
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                widget.text,
+                style: TextStyle(
+                  color: widget.isPrimary
+                      ? Colors.white
+                      : (_isHovered ? AppColors.accentTeal : Colors.white),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         ),
       ),
