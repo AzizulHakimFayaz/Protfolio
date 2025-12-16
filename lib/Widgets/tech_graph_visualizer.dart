@@ -6,6 +6,7 @@ class TechGraphVisualizer extends StatefulWidget {
   final bool isActive;
   final List<IconData> techIcons;
   final List<String> techLabels;
+  final IconData? centerIcon;
 
   const TechGraphVisualizer({
     super.key,
@@ -13,6 +14,7 @@ class TechGraphVisualizer extends StatefulWidget {
     required this.isActive,
     required this.techIcons,
     required this.techLabels,
+    this.centerIcon,
   });
 
   @override
@@ -91,37 +93,114 @@ class _TechGraphVisualizerState extends State<TechGraphVisualizer>
             ),
           ),
 
-          // Orbiting Icons
+          // Central Connections (Lines to Orbiting Icons)
           if (widget.techIcons.isNotEmpty)
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Stack(
-                  children: List.generate(widget.techIcons.length, (index) {
-                    // Angular spacing
-                    final double step = (2 * math.pi) / widget.techIcons.length;
-                    // Current angle + global rotation (clockwise)
-                    final double angle =
-                        (index * step) + (_controller.value * 2 * math.pi);
+            Positioned.fill(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: _CentralConnectionPainter(
+                      itemCount: widget.techIcons.length,
+                      animationValue: _controller.value,
+                      color: widget.accentColor,
+                      isActive: widget.isActive,
+                    ),
+                  );
+                },
+              ),
+            ),
 
-                    // Radius (0.6 to 0.75 slightly oscillating for organic feel)
-                    final double radius = 0.7 + (math.sin(angle * 3) * 0.05);
+          // Orbiting Icons and Central Icon Layout
+          if (widget.techIcons.isNotEmpty)
+            Positioned.fill(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final double width = constraints.maxWidth;
+                  final double height = constraints.maxHeight;
+                  final double centerX = width / 2;
+                  final double centerY = height / 2;
 
-                    return Align(
-                      alignment: Alignment(
-                        math.cos(angle) * radius,
-                        math.sin(angle) * radius,
+                  return Stack(
+                    children: [
+                      // Central Icon
+                      if (widget.centerIcon != null)
+                        Align(
+                          alignment: Alignment.center,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: widget.isActive ? 1.0 : 0.0,
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(0xFF1B263B), // Match bg
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: widget.accentColor.withOpacity(0.5),
+                                    blurRadius: 20,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                widget.centerIcon,
+                                size: 40,
+                                color: widget.accentColor,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      // Orbiting Icons
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Stack(
+                            children: List.generate(widget.techIcons.length, (
+                              index,
+                            ) {
+                              // Angular spacing
+                              final double step =
+                                  (2 * math.pi) / widget.techIcons.length;
+                              // Current angle + global rotation (clockwise)
+                              final double angle =
+                                  (index * step) +
+                                  (_controller.value * 2 * math.pi);
+
+                              // Radius (0.6 to 0.75 slightly oscillating for organic feel)
+                              final double radius =
+                                  0.7 + (math.sin(angle * 3) * 0.05);
+
+                              // Calculate position relative to center
+                              // Note: Paint uses size.width/2 * dx
+                              final double dx =
+                                  math.cos(angle) * radius * (width / 2);
+                              final double dy =
+                                  math.sin(angle) * radius * (height / 2);
+
+                              return Positioned(
+                                left: centerX + dx,
+                                top: centerY + dy,
+                                child: FractionalTranslation(
+                                  translation: const Offset(-0.5, -0.5),
+                                  child: _OrbitingItem(
+                                    icon: widget.techIcons[index],
+                                    color: widget.accentColor,
+                                    isActive: widget.isActive,
+                                    angle:
+                                        angle, // Pass angle to counter-rotate if needed
+                                  ),
+                                ),
+                              );
+                            }),
+                          );
+                        },
                       ),
-                      child: _OrbitingItem(
-                        icon: widget.techIcons[index],
-                        color: widget.accentColor,
-                        isActive: widget.isActive,
-                        angle: angle, // Pass angle to counter-rotate if needed
-                      ),
-                    );
-                  }),
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
 
           // Floating Labels (Keep them random or static for now to avoid clutter)
@@ -379,5 +458,99 @@ class _FloatingLabelState extends State<_FloatingLabel>
         );
       },
     );
+  }
+}
+
+class _CentralConnectionPainter extends CustomPainter {
+  final int itemCount;
+  final double animationValue;
+  final Color color;
+  final bool isActive;
+
+  _CentralConnectionPainter({
+    required this.itemCount,
+    required this.animationValue,
+    required this.color,
+    required this.isActive,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (itemCount == 0 || !isActive) return;
+
+    final center = size.center(Offset.zero);
+    final double shortSide = math.min(size.width, size.height);
+    final double ringRadius = shortSide * 0.15; // 15% of shortest side
+
+    final linePaint = Paint()
+      ..color = color.withOpacity(isActive ? 0.2 : 0.05)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    final ringPaint = Paint()
+      ..color = color.withOpacity(isActive ? 0.6 : 0.2)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    final glowPaint = Paint()
+      ..color = color.withOpacity(isActive ? 0.2 : 0.1)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
+
+    // Draw Central Ring with Glow
+    canvas.drawCircle(center, ringRadius, glowPaint);
+    canvas.drawCircle(center, ringRadius, ringPaint);
+
+    // Draw Inner Ring (Decor)
+    canvas.drawCircle(
+      center,
+      ringRadius * 0.7,
+      Paint()
+        ..color = color.withOpacity(isActive ? 0.4 : 0.1)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.0,
+    );
+
+    for (int i = 0; i < itemCount; i++) {
+      // Logic must match _OrbitingItem positioning exactly
+      final double step = (2 * math.pi) / itemCount;
+      final double angle = (i * step) + (animationValue * 2 * math.pi);
+      // Radius (0.6 to 0.75 relative to half-sizes)
+      final double radiusFactor = 0.7 + (math.sin(angle * 3) * 0.05);
+
+      // Icon Position (Center + Vector * factor * halfSize)
+      // Note: _OrbitingItem used Align (1.0 = edge). Align coordinates relate to center.
+      // dx = cos(angle) * max_width/2 * radiusFactor
+      final double iconDx = math.cos(angle) * radiusFactor * (size.width / 2);
+      final double iconDy = math.sin(angle) * radiusFactor * (size.height / 2);
+
+      final iconPoint = Offset(center.dx + iconDx, center.dy + iconDy);
+
+      // Start line at Ring Edge
+      // Vector from center to icon
+      final double vectorX = iconDx;
+      final double vectorY = iconDy;
+      final double distance = math.sqrt(vectorX * vectorX + vectorY * vectorY);
+
+      if (distance > ringRadius) {
+        // Normalize vector
+        final double unitX = vectorX / distance;
+        final double unitY = vectorY / distance;
+
+        final startPoint = Offset(
+          center.dx + (unitX * ringRadius),
+          center.dy + (unitY * ringRadius),
+        );
+
+        canvas.drawLine(startPoint, iconPoint, linePaint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _CentralConnectionPainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue ||
+        oldDelegate.isActive != isActive ||
+        oldDelegate.color != color ||
+        oldDelegate.itemCount != itemCount;
   }
 }

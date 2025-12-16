@@ -51,6 +51,24 @@ class ProjectShowcaseState extends State<ProjectShowcase> {
       techLabels: ["Custom UI", "Animation", "Interactive"],
     ),
     ProjectData(
+      title: "AutoNote Web",
+      description:
+          "An intelligent note-taking platform that uses Llama 3.3 AI to automatically detect and merge related notes, keeping your workspace organized without manual effort. Features a Flutter Web frontend and a robust Python/Django REST API backend.",
+      tags: ["Flutter Web", "Python", "Django", "Llama 3.3", "AI"],
+      link:
+          "https://github.com/yourusername/autonote", // Replace with your actual link
+      icon: Icons.auto_awesome, // Represents "Automatic" or "Magic"
+      accentColor: const Color(
+        0xFF6C63FF,
+      ), // A modern "AI Purple" (or use AppColors.accentBlue)
+      techIcons: [
+        Icons.flutter_dash, // Frontend
+        Icons.api, // REST API
+        Icons.psychology, // AI / Brain (Llama 3.3)
+      ],
+      techLabels: ["Flutter Web", "REST API", "Llama 3.3"],
+    ),
+    ProjectData(
       title: "Flutter Calculator App",
       description:
           "A clean, responsive calculator app built in Flutter. Demonstrates widget structure, custom UI, and functional logic.",
@@ -498,6 +516,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     isActive: active,
                     techIcons: widget.project.techIcons,
                     techLabels: widget.project.techLabels,
+                    centerIcon: widget.project.icon,
                   ),
                 ),
                 // Foreground Content
@@ -507,34 +526,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Icon
-                      Expanded(
-                        child: Center(
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black12,
-                              boxShadow: active
-                                  ? [
-                                      BoxShadow(
-                                        color: widget.project.accentColor
-                                            .withOpacity(0.2),
-                                        blurRadius: 20,
-                                      ),
-                                    ]
-                                  : [],
-                            ),
-                            child: Icon(
-                              widget.project.icon,
-                              size: 60,
-                              color: active
-                                  ? widget.project.accentColor
-                                  : Colors.white24,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Icon removed as it is now part of the background visualizer
+                      const Spacer(),
                       const SizedBox(height: 20),
                       // Tags
                       Wrap(

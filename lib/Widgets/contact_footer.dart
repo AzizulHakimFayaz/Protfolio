@@ -51,8 +51,8 @@ class ContactFooterSection extends StatelessWidget {
                   const SizedBox(width: 20),
                   _SocialIcon(
                     icon: Icons.email,
-                    url: "mailto:azizulhakim@example.com",
-                  ), // Update with real email if known
+                    url: "mailto:azizulhakimfayaz@gmail.com",
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
@@ -71,16 +71,100 @@ class ContactFooterSection extends StatelessWidget {
   }
 }
 
-class _ContactForm extends StatelessWidget {
+class _ContactForm extends StatefulWidget {
+  @override
+  State<_ContactForm> createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<_ContactForm> {
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _messageController = TextEditingController();
+
+  Future<void> _sendMessage() async {
+    final String name = _nameController.text;
+    final String email = _emailController.text;
+    final String message = _messageController.text;
+
+    if (name.isEmpty || email.isEmpty || message.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill in all fields")),
+      );
+      return;
+    }
+
+    // Prepare mailto URI
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'azizulhakimfayaz@gmail.com',
+      query: _encodeQueryParameters(<String, String>{
+        'subject': 'Portfolio Contact: $name',
+        'body': 'Name: $name\nEmail: $email\n\nMessage:\n$message',
+      }),
+    );
+
+    try {
+      if (await canLaunchUrl(emailLaunchUri)) {
+        await launchUrl(
+          emailLaunchUri,
+          mode: LaunchMode.externalApplication,
+        ); // Force external app
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Sent! Opening your email app..."),
+              backgroundColor: AppColors.accentTeal,
+            ),
+          );
+          _nameController.clear();
+          _emailController.clear();
+          _messageController.clear();
+        }
+      } else {
+        throw 'Could not launch $emailLaunchUri';
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Could not open email app. Please email directly."),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  String? _encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map(
+          (MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+        )
+        .join('&');
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _CustomTextField(label: "Name"),
+        _CustomTextField(label: "Name", controller: _nameController),
         const SizedBox(height: 20),
-        _CustomTextField(label: "Email"),
+        _CustomTextField(label: "Email", controller: _emailController),
         const SizedBox(height: 20),
-        _CustomTextField(label: "Message", maxLines: 5),
+        _CustomTextField(
+          label: "Message",
+          maxLines: 5,
+          controller: _messageController,
+        ),
         const SizedBox(height: 40),
         Container(
           decoration: BoxDecoration(
@@ -97,7 +181,7 @@ class _ContactForm extends StatelessWidget {
             ],
           ),
           child: ElevatedButton(
-            onPressed: () {}, // Action
+            onPressed: _sendMessage,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
@@ -124,16 +208,23 @@ class _ContactForm extends StatelessWidget {
 class _CustomTextField extends StatelessWidget {
   final String label;
   final int maxLines;
+  final TextEditingController? controller;
 
-  const _CustomTextField({required this.label, this.maxLines = 1});
+  const _CustomTextField({
+    required this.label,
+    this.maxLines = 1,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller, // Use the controller
       maxLines: maxLines,
+      style: const TextStyle(color: Colors.black87), // Ensure text is visible
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.grey.shade500),
+        labelStyle: TextStyle(color: Colors.grey.shade600),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
